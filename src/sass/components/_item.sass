@@ -1,0 +1,22 @@
+.item
+  height: 60px
+  line-height: 60px
+  transition: $transition
+  border: 1px solid $item-border-color
+  border-radius: 20px
+  font-size: 16px
+  font-weight: 400
+  padding-left: 30px
+  margin: 10px 0px
+  color: $main-text-secondary
+  &:hover
+    cursor: pointer
+    box-shadow: 0px 0px 5px 1px #dfdfdf
+    .item__title, .item__author
+      color: $color-text-hover
+  &__title
+    display: inline-block
+    min-width: calc(22% + 290px)
+  &__author,&__title
+    color: $main-text-secondary
+    transition: $transition
