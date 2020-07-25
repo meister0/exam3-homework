@@ -1,0 +1,54 @@
+.single-page
+  &__headers,&__content
+    display: inline-block
+    font-size: 18px
+    font-weight: 400
+    letter-spacing: 0.17px
+    line-height: 25px
+  &__item
+    margin-bottom: 45px
+    display: flex
+    align-items: flex-start
+    position: relative
+    padding-top: 5px
+    &:nth-child(1)
+      .single-page__headers
+        line-height: 35px
+  &__headers
+    min-width: 165px
+  &__slash
+    display: inline-block
+    position: absolute
+    top: -10px
+    left: 155px
+    font-size: 50px
+    font-weight: 300
+    margin-right: 10px
+  &__title
+    margin-left: 20px
+    display: inline-block
+    font-size: 30px
+    font-weight: 400
+    letter-spacing: 0.3px
+    line-height: 35px
+    color: $color-main
+    margin-right: 45px
+  &__content
+    max-width: 80%
+    min-width: 250px
+    height: 100%
+    margin-right: 45px
+    &_select
+      min-width: 200px
+  &__error
+    margin: auto 0
+    padding: 5px 10px
+    border-radius: 5px
+    display: block
+    border: 1px solid $color-text-error
+    color: $color-text-error
+
+  .page__button_edit
+    position: absolute
+    right: 0
+    top: 0
