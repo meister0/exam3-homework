@@ -1,18 +1,17 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
+import btnSvgAdd from '../assets/icons/plus.svg';
 import Button from '../components/Button/Button';
-import btnSvg from '../assets/icons/plus.svg';
 import List from '../components/List/List';
 import SortPopup from '../components/SortPopup/SortPopup';
 import { setSortBy } from '../redux/actions/filters';
-import { useDispatch, useSelector } from 'react-redux';
-import { Route, useRouteMatch } from 'react-router-dom';
-import SinglePage from './SinglePage';
 
-const Main = ({ title }) => {
+const Main = ({ title, isSorting, isCount }) => {
 	const dispatch = useDispatch();
 	const { sortBy } = useSelector(({ filters }) => filters);
+	const { count } = useSelector(({ data }) => data.users);
 	const { path } = useRouteMatch();
-
 	const sortIems = [
 		{ name: 'Книгам', type: 'books' },
 		{ name: 'Авторам', type: 'authors' },
@@ -24,14 +23,14 @@ const Main = ({ title }) => {
 		},
 		[dispatch]
 	);
-
 	return (
 		<div className="page">
 			<div className="wrapper">
 				<header className="page__header">
 					<div className="box">
 						<h1 className="page__title">Список {title}</h1>
-						{title === 'Книг' ? (
+						{isCount ? <div className="page__count">{count}</div> : null}
+						{isSorting ? (
 							<SortPopup
 								activeSortType={sortBy}
 								items={sortIems}
@@ -40,14 +39,11 @@ const Main = ({ title }) => {
 						) : null}
 					</div>
 					<Button type="add" path={`${path}/add`}>
-						<img className="page-button_ico" src={btnSvg} alt="Button ico" />
+						<img className="page-button_ico" src={btnSvgAdd} alt="Button ico" />
 					</Button>
 				</header>
-				<List />
+				<List isSorting={isSorting} />
 			</div>
-			<Route path={`${path}/:id`}>
-				<SinglePage />
-			</Route>
 		</div>
 	);
 };

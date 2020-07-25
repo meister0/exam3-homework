@@ -1,25 +1,26 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
+import sorting from '../../helpers/sorting';
 import Item from '../Item/Item';
 import Loading from '../Loading/Loading';
 
-const List = () => {
-	const items = useSelector(({ data }) => data.books);
-	const type = useSelector(({ filters }) => filters.sortBy);
-
-	const sorting = (a, b, type) => {
-		switch (type) {
-			case 'authors':
-				return a.authorId > b.authorId ? 1 : a.authorId < b.authorId ? -1 : 0;
-			case 'books':
-				return a.title[0] > b.title[0] ? 1 : a.title[0] < b.title[0] ? -1 : 0;
-			default:
-				throw new Error('[List.jsx]');
-		}
-	};
+const List = ({ isSorting }) => {
+	const { url } = useRouteMatch();
+	const itemNameURL = url.match(/\w+/)[0];
+	const items = useSelector(({ data }) => {
+		return itemNameURL === 'user'
+			? data[itemNameURL + 's'].rows
+			: data[itemNameURL + 's'];
+	});
+	const type = useSelector(({ filters }) =>
+		itemNameURL === 'user' ? 'users' : filters.sortBy
+	);
 
 	let sortedItems = (items, type) => {
-		return items.sort((a, b) => sorting(a, b, type));
+		return isSorting || itemNameURL === 'user'
+			? items.sort((a, b) => sorting(a, b, type))
+			: items;
 	};
 
 	return (
@@ -28,7 +29,7 @@ const List = () => {
 				<Loading />
 			) : (
 				sortedItems(items, type).map((item) => (
-					<Item key={item.id} item={item} />
+					<Item key={item.id} item={item} type={itemNameURL} />
 				))
 			)}
 		</main>

@@ -1,19 +1,15 @@
 import {
-	GET_BOOKS,
 	GET_AUTHORS,
+	GET_BOOKS,
 	GET_USERS,
-	GET_BOOK,
-	GET_AUTHOR,
-	GET_USER,
+	SET_BOOKS,
+	SET_USERS,
 } from '../actions/actionTypes';
 
 const initialState = {
 	books: [],
-	book: {},
-	users: [],
-	user: {},
+	users: { count: null, rows: [] },
 	authors: [],
-	author: {},
 };
 
 const data = (state = initialState, action) => {
@@ -33,20 +29,15 @@ const data = (state = initialState, action) => {
 				...state,
 				authors: action.payload,
 			};
-		case GET_BOOK:
+		case SET_BOOKS:
 			return {
 				...state,
-				book: action.payload,
+				books: action.payload,
 			};
-		case GET_USER:
+		case SET_USERS:
 			return {
 				...state,
-				user: action.payload,
-			};
-		case GET_AUTHOR:
-			return {
-				...state,
-				author: action.payload,
+				users: action.payload,
 			};
 		default:
 			return state;

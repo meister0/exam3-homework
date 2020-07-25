@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
@@ -67,11 +66,5 @@ const SortPopup = React.memo(({ items, activeSortType, onClickSortType }) => {
 		</div>
 	);
 });
-
-SortPopup.propTypes = {
-	activeSortType: PropTypes.string.isRequired,
-	items: PropTypes.arrayOf(PropTypes.object).isRequired,
-	onClickSortType: PropTypes.func.isRequired,
-};
 
 export default SortPopup;

@@ -1,7 +1,9 @@
 .page
+  padding-right: 45px
   margin: 45px 10%
   width: 80%
   min-width: 550px
+  position: relative
   &__header
     height: 100%
     display: flex
@@ -13,6 +15,17 @@
     letter-spacing: 0.3px
     line-height: 25px
     margin-bottom: 15px
+  &__count
+    font-size: 17px
+    font-weight: 400
+    letter-spacing: 0.17px
+    line-height: 25px
+    padding: 0px 10px
+    border-radius: 4px
+    border: 1px solid $color-main
+    position: absolute
+    top: 0
+    left: 370px
   &__button
     width: 45px
     height: 45px
@@ -25,3 +38,24 @@
     align-items: center
     &_add
     &_edit
+    &_submit
+      color: $color-text-white
+      font-size: 17px
+      font-weight: 500
+      padding: 15px 30px
+      border: 2px solid transparent
+      border-radius: 6px
+      background-color: $color-main
+      text-transform: uppercase
+      transition: $transition
+      position: absolute
+      right: 45px
+      &:hover
+        background-color: white
+        border-color: $color-border-hover
+        color: $color-main
+        cursor: pointer
+      &[disabled]
+        border-color: transparent
+        color: $color-text-white
+        background-color: #ccc

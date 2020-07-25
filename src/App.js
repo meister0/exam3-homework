@@ -3,16 +3,20 @@ import { useDispatch } from 'react-redux';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Loading from './components/Loading/Loading';
 import Sidebar from './components/Sidebar/Sidebar';
-import Main from './pages/Main';
-import { fetchGetData } from './redux/actions/data';
-import SinglePage from './pages/SinglePage';
+import { getAllData } from './redux/actions/data';
+
+const Main = React.lazy(() => import('./pages/Main'));
+const Author = React.lazy(() => import('./pages/secondary/Author'));
+const Book = React.lazy(() => import('./pages/secondary/Book'));
+const User = React.lazy(() => import('./pages/secondary/User'));
+const AddAuthor = React.lazy(() => import('./pages/secondary/Add/AddAuthor'));
+const AddBook = React.lazy(() => import('./pages/secondary/Add/AddBook'));
+const AddUser = React.lazy(() => import('./pages/secondary/Add/AddUser'));
 
 const App = () => {
 	const dispatch = useDispatch();
 	React.useEffect(() => {
-		dispatch(fetchGetData('/book', 'GET_BOOKS'));
-		dispatch(fetchGetData('/author', 'GET_AUTHORS'));
-		dispatch(fetchGetData('/user', 'GET_USERS'));
+		dispatch(getAllData());
 	});
 	return (
 		<div className="container">
@@ -21,28 +25,85 @@ const App = () => {
 				<Route
 					path="/book"
 					exact
-					render={(...props) => <Main {...props} title="Книг" />}
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<Main {...props} title="книг" isSorting />
+						</Suspense>
+					)}
 				/>
 				<Route
 					path="/author"
+					exact
 					render={(props) => (
 						<Suspense fallback={<Loading />}>
-							<Main {...props} title="Авторов" />
+							<Main {...props} title="авторов" />
 						</Suspense>
 					)}
-				></Route>
+				/>
 				<Route
 					path="/user"
+					exact
 					render={(props) => (
 						<Suspense fallback={<Loading />}>
-							<Main {...props} title="Пользователей" />
+							<Main {...props} title="пользователей" isCount />
 						</Suspense>
 					)}
-				></Route>
-				<Route path="/book/:id" exact component={SinglePage} />
-				<Route path="/author/:id" exact component={SinglePage} />
-				<Route path="/user/:id" exact component={SinglePage} />
-				<Redirect from="/" to="/book" exact />
+				/>
+				<Route
+					path="/book/add"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<AddBook {...props} />
+						</Suspense>
+					)}
+				/>
+				<Route
+					path="/author/add"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<AddAuthor {...props} />
+						</Suspense>
+					)}
+				/>
+				<Route
+					path="/user/add"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<AddUser {...props} />
+						</Suspense>
+					)}
+				/>
+				<Route
+					path="/book/:id"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<Book {...props} />
+						</Suspense>
+					)}
+				/>
+				<Route
+					path="/author/:id"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<Author {...props} />
+						</Suspense>
+					)}
+				/>
+				<Route
+					path="/user/:id"
+					exact
+					render={(props) => (
+						<Suspense fallback={<Loading />}>
+							<User {...props} />
+						</Suspense>
+					)}
+				/>
+				<Redirect from="/" to="/book" />
 			</Switch>
 		</div>
 	);
